@@ -8,12 +8,14 @@ app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors()); 
-//const APP = './app/routes'
+const APP = './app/routes'
+// 즉시실행 : ({url:`/api/${leaf}`,app})
 // const nodes = ['admin','basic','board','game','todo','user']
-//const nodes = ['basic','board','user']
-//for(const leaf of nodes){
-//  require(`${APP}/${leaf}.route`)({url:`/api/${leaf}`,app})
-//}
+// const nodes = ['basic','board','user']
+const nodes = ['basic']
+for(const leaf of nodes){
+  require(`${APP}/${leaf}.route`)({url:`/api/${leaf}`,app})
+}
 //require(`${APP}/user.route`)({url:`/api/user`,app})
 const corsOptions = {
   origin: 'http://localhost:3000',
