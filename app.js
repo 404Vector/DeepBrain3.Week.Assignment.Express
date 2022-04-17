@@ -15,21 +15,8 @@ console.log(`server ip is http://localhost:${port}`)
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-<<<<<<< HEAD
-app.use(cors()); 
-const APP = './app/routes'
-// 즉시실행 : ({url:`/api/${leaf}`,app})
-// const nodes = ['admin','basic','board','game','todo','user']
-// const nodes = ['basic','board','user']
-const nodes = ['basic']
-for(const leaf of nodes){
-  require(`${APP}/${leaf}.route`)({url:`/api/${leaf}`,app})
-}
-//require(`${APP}/user.route`)({url:`/api/user`,app})
-=======
 app.use(cors());
 
->>>>>>> study
 const corsOptions = {
   origin: 'http://localhost:3000',
   optionsSuccessStatus: 200
