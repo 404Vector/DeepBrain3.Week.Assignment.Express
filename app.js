@@ -27,6 +27,8 @@ app.listen(port, () => {
   console.log('********** 서버가 정상적으로 실행되고 있습니다 *********')
   console.log('***************** ***************** *****************')
 })
+
+// app.get(~) get 상태만을 허용하는 api를 추가
 app.get('/', (req, res) => {
   res.json({ "현재 시간 : ": new Date().toLocaleString() })
 })
