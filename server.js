@@ -4,7 +4,6 @@ import passport from 'passport'
 import morgan from 'morgan'
 import db from './app/models/index.js'
 import api from "./app/routes/api.js"
-import basic from "./app/routes/basic.js"
 import user from "./app/routes/user.js"
 import index from "./app/routes/index.js"
 import getResponse from "./app/lambdas/getResponse.js"
@@ -21,7 +20,6 @@ async function startServer() {
     app.use(_passport.initialize());
     app.use("/", index);
     app.use("/api", api);
-    app.use("/basic", basic);
     app.use("/user", user);
     app.use(morgan('dev'))
     db
@@ -39,6 +37,7 @@ async function startServer() {
         });
 
     app.all("*", function (_req, res) {
+        console.log("no page error");
         return getResponse.notFoundResponse(res, "페이지를 찾을 수 없습니다");
     });
 
