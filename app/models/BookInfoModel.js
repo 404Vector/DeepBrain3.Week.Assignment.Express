@@ -5,8 +5,8 @@ import dotenv from 'dotenv'
 import applyDotenv from '../lambdas/applyDotenv.js'
 
 export default function BookInfoModel(mongoose) {
-    const {jwtSecret} = applyDotenv(dotenv)
-    const userSchema = mongoose.Schema({
+    //const {jwtSecret} = applyDotenv(dotenv)
+    const bookInfoSchema = mongoose.Schema({
         libName: String,
         bookName: String,
         author: String,
@@ -15,6 +15,6 @@ export default function BookInfoModel(mongoose) {
         dataBaseData: String,
     })
     
-    return mongoose.model('BookInfo', userSchema)
+    return mongoose.model('BookInfo', bookInfoSchema)
 
 }

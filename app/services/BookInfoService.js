@@ -7,93 +7,71 @@ export default function BookInfoService(){
     const dbConnect = dbo.getDb();
 
     return {
-        join(req, res){
-            console.log(' ### 5. join 진입 ### '+ JSON.stringify(req.body))
-            new BookInfo(req.body).save(function(err){
+        joinBookInfo(req, res){
+            const data = req.body;
+            new BookInfo(data).save((err)=>{
                 if(err){
                     res.status(500).json({message: err})
-                    console.log('Fail to joining book')
+                    console.log(' - Fail to joining book')
                     return;
                 }else{
-                    console.log('Success to joining book :: ' + body.bookName)
+                    console.log(' - Success to joining book :: ' + data.bookName)
                     res.status(200).json({ok: 'ok'})
-                    return;
+                    //return;
                 }
             })
 
             
         },
-        delete(req, res){
-            BookInfo
-                .findByIdAndRemove({bookName: req.body.bookName})
-                .exec((err, bookInfo) => {
-                    if (err) {
-                        res
-                            .status(500)
-                            .send({message: err});
-                        return;
-                    }
-                    if (bookInfo) {
-                        res
-                            .status(200)
-                            .send({message: "The book is deleted!"});
-                        return;
-                    }
-                })
+
+        deleteBookInfo(req, res){
+            const { id } = req.params;
+            BookInfo.findByIdAndDelete(id, (err) => {
+              if (err) {
+                res.status(500).json({ message: err });
+                console.log(" - Fail to deleting a item");
+                return;
+              } else {
+                res.status(200).json({ ok: "ok" });
+              }
+            });
         },
-        update(req, res){
-            BookInfo
-                .findByIdAndUpdate({bookName: req.body.bookName})
-                .exec((err, bookInfo) => {
-                    if (err) {
-                        res
-                            .status(500)
-                            .send({message: err});
-                        return;
-                    }
-                    if (bookInfo) {
-                        res
-                            .status(200)
-                            .send({message: "The book is updated"});
-                        return;
-                    }
-                })
+
+        updateBookInfo(req, res){
+            const { id } = req.params;
+            BookInfo.findByIdAndUpdate(id, { ...req.body }, (err) => {
+                if (err) {
+                  res.status(500).json({ message: err });
+                  console.log(" - Fail to updating");
+                  return;
+                } else {
+                  res.status(200).json({ ok: "ok" });
+                }
+              });
         },
-        checkDuplicateBookName(req, res) {
-            BookInfo
-                .findById({bookName: req.body.bookName})
-                .exec((err, bookInfo) => {
-                    if (err) {
-                        res
-                            .status(500)
-                            .send({message: err});
-                        return;
-                    }
-                    if (bookInfo) {
-                        res
-                            .status(400)
-                            .send({message: "The book is already exist!"});
-                        return;
-                    }
-                })
-        },
-        getUserByBookName(req, res){
-            const bookName = req.body.bookName
-            BookInfo
-                .findById({bookName: bookName})
-                .exec((_err, bookInfo) => {
-                    res.status(200).json(bookInfo)
-                })
-        },
+        
         //req 안쓰면 _req로 표기
         getBookInfos(_req, res){
-            BookInfo.find().exec(
-                (err, bookInfo)=>{
-                    res.status(200).json(bookInfo)
-                    return;
-                }
-            )
-        }
-        
+            BookInfo.find()
+            .limit(10)
+            .sort([["_id", -1]])
+            .exec((err, bookInfos) => {
+              console.log(" - success to return items");
+              res.status(200).json(bookInfos);
+            });
+        },
+
+        getBookInfo(req, res) {
+            const { id } = req.params;
+            BookInfo.findById(id).exec((err, bookInfo) => {
+              if (err) {
+                res.status(500).json({ message: err });
+                console.log(" - Fail to reading item ");
+              } else {
+                res.status(200).json(bookInfo);
+              }
+            });
+        },
+            
     }
 }

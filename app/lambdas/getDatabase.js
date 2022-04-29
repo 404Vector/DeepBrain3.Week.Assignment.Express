@@ -1,10 +1,12 @@
 
-import { MongoClient } from 'mongodb'
+import { MongoClient } from "mongodb";
+
 const getDatabase = () => {
     const client = new MongoClient(process.env.MONGO_URI, {
         useNewUrlParser: true,
         useUnifiedTopology: true
     })
+
     let dbConnect = null
     return {
         acceptDb(callback){
@@ -12,8 +14,9 @@ const getDatabase = () => {
                 if(err || !db){
                     return callback(err)
                 }
-                dbConnect = db.db('soccerdb');
-                console.log('DB 구성에서 몽고DB에 접속하다')
+                console.log(' # Try connect '+ process.env.MONGO_DB_NAME + '@MONGO_DB')
+                dbConnect = db.db(process.env.MONGO_DB_NAME);
+                console.log(' # Success connect the db')
                 return callback()
             })
         },
