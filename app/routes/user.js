@@ -37,7 +37,7 @@ app.post('/logout', cors(corsOptions), (req, res) => {
     UserService().logout(req, res)
 })
 
-app.post('/getUsers', cors(corsOptions), (req, res) => {
+app.get('/getUsers', cors(corsOptions), (req, res) => {
     console.log(' ### getUsers ### ')
     UserService().getUsers(req, res)
 })

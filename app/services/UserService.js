@@ -88,12 +88,14 @@ export default function UserService(){
         },
         //req 안쓰면 _req로 표기
         getUsers(_req, res){
-            User.find().exec(
-                (err, users)=>{
-                    res.status(200).json(users)
-                    return;
+            User.find().exec((err, users)=>{
+                if (err) {
+                  res.status(500).json({ message: err });
+                  console.log(" - Fail to reading item ");
+                } else {
+                  res.status(200).json(users);
                 }
-            )
+            })
         }
         
     }
