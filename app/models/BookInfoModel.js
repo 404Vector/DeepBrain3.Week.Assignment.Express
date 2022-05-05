@@ -12,7 +12,7 @@ export default function BookInfoModel(mongoose) {
         author: String,
         publisher: String,
         publishedYear: String,
-        dataBaseData: String,
+        dataBaseDate: String,
     })
     
     return mongoose.model('BookInfo', bookInfoSchema)
